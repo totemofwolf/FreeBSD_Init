@@ -1,8 +1,8 @@
 #!/bin/sh
 # filename:install_basic_sw.sh
 # author:wanglang@ihczd.com
-# version:0.9.0
-# date:2014-08-05
+# version:1.0.0
+# date:2014-08-09
 
 echo "-----------------------add basic softwares proc log begin---------------------" | tee -a $LOGFILE
 

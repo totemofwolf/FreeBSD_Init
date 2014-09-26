@@ -1,8 +1,8 @@
 #!/bin/sh
 # filename:init_env.sh
 # author:wanglang@ihczd.com
-# version:0.9.0
-# date:2014-08-05
+# version:1.0.0
+# date:2014-08-09
 
 RELEASE_VER=`uname -r | awk -F '-' '{print $1}'` # 9.2
 ARCH=`uname -m | awk -F '-' '{print $1}'`

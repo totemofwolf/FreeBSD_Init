@@ -1,8 +1,8 @@
 #!/bin/sh
 # filename:set_bootloader.sh
 # author:wanglang@ihczd.com
-# version:0.9.0
-# date:2014-08-05
+# version:1.0.0
+# date:2014-08-09
 
 BOOT_PATH="/boot"
 ETC_PATH="/etc"
@@ -20,28 +20,19 @@ else
 \cp -av $BOOT_PATH/loader.conf $BOOT_PATH/loader.conf.orig
 echo "Add loader.conf..." | tee -a $LOGFILE
 cat >> $BOOT_PATH/loader.conf << EOF
-# hczdyw add @ 140916
+# hczdyw add
 autoboot_delay="5"
 loader_logo="beastie"
-#loader_logo="orb"
-ahci_load="YES"			# Advanced Host Controller Interface (AHCI)
 ataahci_load="YES"
 ataintel_load="YES"
 vpo_load="YES"          # Parallel to SCSI interface driver
-# Wait for data accept filter. 
-# For nginx https servers add "listen  127.0.0.1:443 ssl spdy accept_filter=dataready;"
-accf_data_load="YES"
-accf_dns_load="YES"     # Wait for full DNS request accept filter(unbound)
-# Wait for full HTTP request accept filter buffer incoming connections until complete HTTP requests arrive (nginx
-# apache) for nginx http add, "listen 127.0.0.1:80 accept_filter=httpready;"
-accf_http_load="YES"
+accf_data_load="YES"    # Wait for data accept filter
+accf_dns_load="YES"     # Wait for full DNS request accept filter
+accf_http_load="YES"    # Wait for full HTTP request accept filter
 # FreeBSD 9+
 # New Congestion Control for FreeBSD
 cc_htcp_load="YES"		# Use HTCP congestion control,also need to set 'net.inet.tcp.cc.algorithm=htcp' in sysctl
-# Asynchronous I/O, or non-blocking I/O is a form of input/output processing
-# permiting other processing to continue before the transmission has finished.
-# AIO is used for accelerating Nginx on ZFS. Check for our tutorials on both.
-aio_load="YES"
+aio_load="YES"          # Asynchronous I/O
 fdescfs_load="YES"      # Filedescriptors filesystem
 procfs_load="YES"       # Process filesystem
 #acpi_dsdt_load="YES"
@@ -49,10 +40,10 @@ procfs_load="YES"       # Process filesystem
 # Increase interface send queue length
 # See commit message http://svn.freebsd.org/viewvc/base?view=revision&revision=207554
 #net.link.ifqmaxlen=1024
-kern.ipc.semmni=256 #60
+kern.ipc.semmni=60
 kern.ipc.semmns=640 #kern.ipc.semmns=540 # For 500 pg clients modify @20140808
 kern.ipc.semume=60
-kern.ipc.semmnu=256 #180
+kern.ipc.semmnu=180
 kern.maxproc=32768
 kern.ipc.shmmni=600
 # ZFS

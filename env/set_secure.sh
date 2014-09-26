@@ -1,8 +1,8 @@
 #!/bin/sh
 # filename:BSD_set_secure.sh
 # author:wanglang@ihczd.com
-# version:0.9.0
-# date:2014-08-05
+# version:1.0.0
+# date:2014-08-09
 
 ETC_PATH="/etc"
 
@@ -36,11 +36,10 @@ echo 'add rc.conf configure begin...' | tee -a $LOGFILE
 cat >> $ETC_PATH/rc.conf << EOF
 
 # hczdyw add
-# portmap_enable="NO" For NFS
+portmap_enable="NO"
 inetd_enable="NO"
 clear_tmp_enable="YES"
 moused_enable="NO"
-syslogd_flags="-ss"
 EOF
 echo 'add rc.conf configure begin...' | tee -a $LOGFILE
 fi
