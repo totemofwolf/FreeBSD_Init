@@ -1,0 +1,213 @@
+"sudo apt-get install vim-gtk
+"For gvim or vim-lite
+set nu
+set nomodeline
+set nocompatible
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Codec setting
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set encoding=utf-8
+set fileencodings=utf-8,chinese,latin-1
+if has("win32")
+ set fileencoding=chinese
+else
+ set fileencoding=utf-8
+endif
+let $VIMFILES = $VIM."/vimfiles"
+syntax on
+set cindent
+set smartindent
+set autoindent
+set backspace=indent,eol,start
+set softtabstop=4
+"set foldenable
+"set foldmethod=syntax
+nnoremap @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')
+set sw=4
+set ts=4
+set et
+set lbr
+set fo+=mB
+set sm
+set selection=inclusive
+set wildmenu
+set mousemodel=popup
+"""""""""""
+"VIEW
+"""""""""""
+set shortmess=atI
+set showcmd
+set scrolloff=6
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+set laststatus=2
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()"
+func SetTitle()
+    if &filetype == 'sh'
+        call setline(1,"\#!/bin/bash")
+        call append(line("."), "")
+    elseif &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python")
+        call append(line("."),"# coding=utf-8")
+        call append(line(".")+1, "")
+"    elseif &filetype == 'mkd'
+"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+    else
+        call setline(1, "/************************************")
+        call append(line("."), "    > File Name: ".expand("%"))
+        call append(line(".")+1, "    > Author: w0ng")
+        call append(line(".")+2, "    > Mail: wonglend@gmail.com ")
+        call append(line(".")+3, "    > Created Time: ".strftime("%c"))
+        call append(line(".")+4, " ********************************************")
+        call append(line(".")+5, "")
+ endif
+    if &filetype == 'cpp'
+        call append(line(".")+6, "#include<iostream>")
+        call append(line(".")+7, "using namespace std;")
+        call append(line(".")+8, "")
+    endif
+    if &filetype == 'c'
+        call append(line(".")+6, "#include<stdio.h>")
+        call append(line(".")+7, "")
+    endif
+"    if &filetype == 'java'
+"        call append(line(".")+6,"public class ".expand("%"))
+"        call append(line(".")+7,"")
+"    endif
+endfunc
+autocmd BufNewFile * normal G
+"map <C-v> "*pa
+"map <>leader=ClosePair('>')sudo :w !sudo tee %
+imap <C-v> <Esc>"*pa
+imap <C-a> <Esc>^
+imap <C-e> <Esc>$
+vmap <C-c> "+y
+"set clipboard=unnamed
+" Leave Blank line
+nnoremap <F2> :g/^\s*$/d<CR>
+nnoremap <C-F2> :vert diffsplit
+"nnoremap <Leader>fu :CtrlPFunky<Cr>
+"nnoremap <C-n> :CtrlPFunky<Cr>
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        if has("win32")
+            exec "! ./%<"
+        else
+            exec "!time ./%<"
+        endif
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        if has("win32")
+            exec "! ./%<"
+        else
+            exec "!time ./%<"
+        endif
+    elseif &filetype == 'java'
+        exec "!javac %"
+        if has("win32")
+            exec "! java %<"
+        else
+            exec "!time java %<"
+        endif
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        if has("win32")
+            exec "!python2.7 %"
+        else
+            exec "!time python2.7 %"
+        endif
+    elseif &filetype == 'go'
+        exec "!time go run %"
+    endif
+endfunc
+map <F6> :call FormartSrc()<CR><CR>
+func FormartSrc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!astyle --style=ansi -a --suffix=none %"
+    elseif &filetype == 'cpp' || &filetype == 'hpp'
+        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
+elseif &filetype == 'perl'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'py'||&filetype == 'python'
+        exec "r !autopep8 -i --aggressive %"
+    elseif &filetype == 'java'
+        exec "!astyle --style=java --suffix=none %"
+    elseif &filetype == 'jsp'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'xml'
+        exec "!astyle --style=gnu --suffix=none %"
+    else
+        exec "normal gg=G"
+        return
+    endif
+    exec "e! %"
+endfunc
+map <F8> :call Rungdb()<CR>
+func! Rungdb()
+    exec "w"
+    exec "!g++ % -g -o %<"
+    exec "!gdb ./%<"
+endfunc
+nmap tt :%s/\t/    /g<CR>
+set cmdheight=2
+set linespace=0
+" Searching
+set ignorecase
+set incsearch
+set hlsearch
+set showmatch
+set matchtime=3
+set history=100
+highlight Search term=reverse ctermbg=4 ctermfg=7
+syntax enable
+filetype on
+filetype plugin on
+filetype plugin indent on
+set completeopt=menu,longest,preview
+set pumheight=15
+set matchpairs=(:),{:},[:],<:>
+if has("autocmd")
+      autocmd BufReadPost *
+          \ if line("'\"") > 0 && line("'\"") <= line("$") |
+          \   exe "normal g`\"" |
+          \ endif
+endif
+autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+set autoread
+set autowrite
+set noeb
+set confirm
+set nobackup
+set noswapfile
+set report=0
+set selection=exclusive
+set selectmode=mouse,key
+let Tlist_Show_One_File = 1 "??????????tag,????????
+let Tlist_File_Fold_Auto_Close = 1
+let Tlist_Exit_OnlyWindow = 1 "??taglist?????????,???vim
+let Tlist_Use_Right_Window = 1 "????????taglist??
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1  
+"nmap tl :Tlist<cr>
+let g:pydiction_location = '~/.vim/after/complete-dict'
+let g:pydiction_menu_height = 20
+"let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+set iskeyword+=.
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+if &term=="xterm"
+  set t_Co=8
+  set t_Sb=^[[4%dm
+  set t_Sf=^[[3%dm
+endif
