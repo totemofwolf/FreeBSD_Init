@@ -1,8 +1,8 @@
 #!/bin/sh
 # filename:set_dns.sh
 # author:wanglang@ihczd.com
-# version:1.0.0
-# date:2014-08-09
+# version:0.9.0
+# date:2014-08-05
 
 ETC_PATH="/etc"
 
