@@ -8,6 +8,8 @@
 RELEASE_VER=`uname -r | awk -F '-' '{print $1}'` # 9.2
 ARCH=`uname -m | awk -F '-' '{print $1}'`
 ROOT_PATH="/root"
+BASE_DIR=`pwd`
+LOGFILE="$BASE_DIR/OS_init.log"
 
 DATE=`date +%Y%m%d%H%M`
 
@@ -19,6 +21,7 @@ if cat $ROOT_PATH/.cshrc | grep "PACKAGESITE"; then
 	echo -e "\033[1;40;31mInfo:	@$ROOT_PATH/.cshrc PACKAGESITE var exists,Skip..\033[0m" | tee -a $LOGFILE
 else
 \cp -av $ROOT_PATH/.cshrc $ROOT_PATH/.cshrc.orig
+sed -i '' '/path/'d .cshrc | tee -a $LOGFILE # delete default path line
 echo "Add rc env..." | tee -a $LOGFILE
 cat >> $ROOT_PATH/.cshrc << EOF
 
@@ -33,6 +36,7 @@ alias vi	vim
 setenv LANG en_US.UTF-8
 setenv LC_ALL en_US.UTF-8
 set rmstar
+set path = (/usr/local/bin /sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin '$HOME'/bin)
 EOF
 echo "Add rc env done!!" | tee -a $LOGFILE
 echo -e "\033[1;40;31mInfo:	@$ROOT_PATH/.cshrc Add the following lines:\033[0m" | tee -a $LOGFILE

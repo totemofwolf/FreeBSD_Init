@@ -8,7 +8,7 @@ RELEASE_VER=`uname -r | awk -F '-' '{print $1}'` # 9.2
 ARCH=`uname -m | awk -F '-' '{print $1}'`
 ROOT_PATH="/root"
 ETC_PATH="/etc"
-export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin
+export PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin
 export BASE_DIR=`pwd`
 export LOGFILE="$BASE_DIR/OS_init.log"
 
