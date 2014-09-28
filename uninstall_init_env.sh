@@ -7,7 +7,8 @@
 ROOT_PATH="/root"
 BOOT_PATH="/boot"
 ETC_PATH="/etc"
-BASE_DIR="$ROOT_PATH/work"
+#BASE_DIR="$ROOT_PATH/work"
+BASE_DIR=`pwd`
 
 DATE=`date +%Y%m%d%H%M`
 

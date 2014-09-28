@@ -9,7 +9,7 @@ ARCH=`uname -m | awk -F '-' '{print $1}'`
 ROOT_PATH="/root"
 ETC_PATH="/etc"
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin
-export BASE_DIR="/root/work"
+export BASE_DIR=`pwd`
 export LOGFILE="$BASE_DIR/OS_init.log"
 
 DATE=`date +%Y%m%d%H%M`

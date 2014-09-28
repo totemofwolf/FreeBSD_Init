@@ -40,6 +40,7 @@ portmap_enable="NO"
 inetd_enable="NO"
 clear_tmp_enable="YES"
 moused_enable="NO"
+zfs_enable="YES"
 EOF
 echo 'add rc.conf configure begin...' | tee -a $LOGFILE
 fi

@@ -6,7 +6,7 @@
 
 BOOT_PATH="/boot"
 ETC_PATH="/etc"
-BASE_DIR="/root/work"
+#BASE_DIR="/root/work"
 
 DATE=`date +%Y%m%d%H%M`
 

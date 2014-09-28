@@ -5,7 +5,7 @@
 # date:2014-08-09
 
 ETC_PATH="/etc"
-BASE_DIR="/root/work"
+#BASE_DIR="/root/work"
 DATE=`date +%Y%m%d%H%M`
 
 echo "====================================Ⅰ $ETC_PATH/sysctl.conf ===========================================" | tee -a $LOGFILE
