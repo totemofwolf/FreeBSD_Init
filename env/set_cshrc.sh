@@ -21,8 +21,8 @@ if cat $ROOT_PATH/.cshrc | grep "PACKAGESITE"; then
 	echo -e "\033[1;40;31mInfo:	@$ROOT_PATH/.cshrc PACKAGESITE var exists,Skip..\033[0m" | tee -a $LOGFILE
 else
 \cp -av $ROOT_PATH/.cshrc $ROOT_PATH/.cshrc.orig
-sed -i '' '/path/'d .cshrc | tee -a $LOGFILE # delete default path line
 echo "Add rc env..." | tee -a $LOGFILE
+sed -i '' '/path/'d $ROOT_PATH/.cshrc | tee -a $LOGFILE # delete default path line
 cat >> $ROOT_PATH/.cshrc << EOF
 
 # hczdyw add
@@ -36,7 +36,7 @@ alias vi	vim
 setenv LANG en_US.UTF-8
 setenv LC_ALL en_US.UTF-8
 set rmstar
-set path = (/usr/local/bin /sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin '$HOME'/bin)
+set path = (/usr/local/bin /sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin \$HOME/bin)
 EOF
 echo "Add rc env done!!" | tee -a $LOGFILE
 echo -e "\033[1;40;31mInfo:	@$ROOT_PATH/.cshrc Add the following lines:\033[0m" | tee -a $LOGFILE
